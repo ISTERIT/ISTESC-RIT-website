@@ -1,0 +1,35 @@
+.everything_center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+@media (min-width: 768px) {
+  .flex-col_desktop {
+    flex-direction: column;
+  }
+  .flex-row_desktop {
+    flex-direction: row;
+  }
+}
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.gap-1{
+  gap: 1rem;
+}
+.b15{
+  border-radius: 15px;
+}
+.cup{
+  cursor: pointer;
+}

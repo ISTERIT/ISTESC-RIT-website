@@ -1,0 +1,26 @@
+{
+  "name": "iste-sc-rit-23",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@emailjs/browser": "^4.3.3",
+    "@gsap/react": "^2.1.1",
+    "gsap": "^3.12.5",
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.11",
+    "@types/react": "^18.3.3",
+    "prettier": "^3.2.5",
+    "typescript": "^5.5.3"
+  }
+}
