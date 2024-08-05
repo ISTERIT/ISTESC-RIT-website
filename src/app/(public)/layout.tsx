@@ -1,6 +1,7 @@
 import "./reset.css";
 import "./globals.css";
 import "./shorthand.css";
+import "../global.css"
 import Font from "@/components/Font";
 import Nav from "@/components/Nav/Nav";
 

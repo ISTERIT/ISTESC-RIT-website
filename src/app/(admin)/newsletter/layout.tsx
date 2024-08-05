@@ -1,4 +1,5 @@
 import "./globals.css";
+import "../../global.css"
 import {Poppins} from "next/font/google";
 
 export const metadata = {
