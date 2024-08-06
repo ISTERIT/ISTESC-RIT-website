@@ -1,7 +1,6 @@
 "use server";
 
 import User from "@/app/(admin)/lib/User";
-import user from "@/app/(admin)/lib/User";
 
 interface Rtype {
     msg?: string;
