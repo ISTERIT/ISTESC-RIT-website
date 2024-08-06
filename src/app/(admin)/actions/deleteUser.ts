@@ -20,12 +20,12 @@ async function deleteUser(tempID: string): Promise<Rtype> {
         }
     }
 
-    User.deleteOne({
+    let result = await User.deleteOne({
         tempID: tempID
     });
 
     return {
-        success: true,
+        success: result.acknowledged,
     }
 }
 

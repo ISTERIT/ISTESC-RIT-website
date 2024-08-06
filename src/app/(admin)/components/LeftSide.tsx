@@ -10,9 +10,10 @@ import {
     IconTrashX
 } from "@tabler/icons-react";
 import React, {useEffect, useState} from "react";
-import User, {IUser} from "@/app/(admin)/lib/User";
+import {IUser} from "@/app/(admin)/lib/User";
 import {getUserList} from "@/app/(admin)/actions/getUserList";
 import {Skeleton} from "@/components/ui/skeleton";
+import Spinner from "@/app/(admin)/components/Loader";
 import deleteUser from "@/app/(admin)/actions/deleteUser";
 
 function Loading() {
@@ -23,9 +24,9 @@ function Loading() {
         </div>
         <div className="flex justify-between items-end">
             <div>
-                <Skeleton className="h-[15px] w-[300px] mt-2 rounded-xl"/>
-                <Skeleton className="h-[15px] w-[300px] mt-2 rounded-xl"/>
-                <Skeleton className="h-[15px] w-[300px] mt-2 rounded-xl"/>
+                <Skeleton className="h-[15px] w-[60%] mt-2 rounded-xl"/>
+                <Skeleton className="h-[15px] w-[60%] mt-2 rounded-xl"/>
+                <Skeleton className="h-[15px] w-[60%] mt-2 rounded-xl"/>
             </div>
             <Skeleton className="h-[40px] w-[40px] rounded-xl"/>
         </div>
@@ -60,8 +61,8 @@ export function LeftSide() {
                         <Loading/>
                     </div>
                     :
-                    users.map((user) => {
-                        return <div className="p-2 bg-white rounded-md">
+                    users.map((user, i) => {
+                        return <div className="p-2 bg-white rounded-md" key={user.tempID}>
                             <div className='flex justify-between items-center'>
                                 <span className="font-bold flex items-center gap-2">
                                     <div
@@ -92,13 +93,28 @@ export function LeftSide() {
                                         {user.tempID}
                                     </span>
                                 </div>
-                                <button className="hover:scale-125" onClick={(e) => {
-                                    if(confirm(`Do you want to delete user ${user.name}?`)) {
-                                        // e.target
-                                        // deleteUser(user.tempID).then()
-                                    }
-                                }}>
-                                    <IconTrashX className="text-red-500"/>
+                                <button id={user.tempID}
+                                        className="user-del-btn hover:scale-125 disabled:grayscale disabled:hover:scale-1"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            if (confirm(`Are you sure you want to remove the user ${user.name}?`)) {
+                                                let elm = document.getElementById(user.tempID);
+                                                if (elm) {
+                                                    elm.setAttribute('disabled', 'true');
+                                                    deleteUser(user.tempID).then(r => {
+                                                        if (r.success) {
+                                                            setUsers(users.filter(u => u.tempID !== user.tempID));
+                                                        } else {
+                                                            elm.setAttribute('disabled', 'false');
+                                                        }
+                                                    }).finally(() => {
+                                                        elm.setAttribute('disabled', 'false');
+                                                    });
+                                                }
+                                            }
+                                        }}>
+                                    <IconTrashX className="text-red-500 del-ic"/>
+                                    <Spinner className="hidden w-[24px] spinner"/>
                                 </button>
                             </div>
                         </div>

@@ -1,0 +1,8 @@
+
+.user-del-btn:disabled .spinner {
+    display: block;
+}
+
+.user-del-btn:disabled .del-ic {
+    display: none;
+}
