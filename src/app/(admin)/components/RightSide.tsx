@@ -2,6 +2,41 @@
 
 import {toast} from "sonner";
 import {useState} from "react";
+import getEmails from "@/app/(admin)/actions/getEmails";
+
+async function sendMailToAll(subject: string, message: string) {
+    try {
+        // let emails = await getEmails();
+        let emails = ["fbn776@gmail.com"];
+
+        if(emails.length === 0) {
+            return {
+                ok: false,
+                message: "No emails found"
+            }
+        }
+
+        await fetch("/api/mail", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                subject: subject,
+                message: message,
+                emails: emails
+            }),
+        });
+
+        return {
+            ok: true,
+            message: "Success",
+            emailLen: emails.length
+        }
+    } catch (e) {
+
+    }
+}
 
 export function RightSide() {
     let [subject, setSubject] = useState('');
@@ -30,8 +65,15 @@ export function RightSide() {
                         toast.error("Please fill in all fields.");
                         return;
                     }
+                    let status = sendMailToAll(subject, message);
 
-                    toast("Event has been created.")
+                    toast.promise(status, {
+                        loading: 'Sending mails...',
+                        success: (data) => {
+                            return `Successfully sent ${data?.emailLen} emails`;
+                        },
+                        error: `Failed to send emails`,
+                    });
                 }} className="px-10 py-2 font-bold hover:scale-110 transition-transform rounded-full bg-green-500 text-white">Send</button>
             </div>
         </form>

@@ -8,7 +8,7 @@ export default async function Home() {
         <main className="flex gap-1 size-full overflow-hidden">
             <LeftSide/>
             <RightSide/>
-            <Toaster />
+            <Toaster position="bottom-center" richColors pauseWhenPageIsHidden theme="light" closeButton/>
         </main>
     );
 }

@@ -9,10 +9,13 @@ import UsersList from "@/app/(admin)/components/UsersList";
 export function LeftSide() {
     const [users, setUsers] = useState<IUser[]>([]);
     const [search, setSearch] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        setIsLoading(true);
         getUserList().then((data) => {
             setUsers(data);
+            setIsLoading(false);
         });
     }, []);
 
@@ -38,12 +41,16 @@ export function LeftSide() {
         </div>
         <div className="w-full flex-1 bg-opacity-50 overflow-y-scroll p-2 space-y-1">
             {
-                users.length === 0 ?
+                isLoading ?
                     <div className="flex items-center justify-center h-[200px]">
                         <Spinner className="w-[50px] border-black border-2"/>
-                    </div>
-                    :
-                    <UsersList users={users} filter={search} setUsers={setUsers}/>
+                    </div> :
+                    users.length === 0 ?
+                        <div className="flex items-center justify-center h-[200px]">
+                            No users found
+                        </div>
+                        :
+                        <UsersList users={users} filter={search} setUsers={setUsers}/>
             }
         </div>
     </aside>
