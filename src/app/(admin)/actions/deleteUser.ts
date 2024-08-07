@@ -15,6 +15,7 @@ async function deleteUser(tempID: string): Promise<Rtype> {
     if(!user) {
         return {
             success: false,
+
             msg: "User not found"
         }
     }
