@@ -3,7 +3,9 @@
 body {
     height: 100dvh;
     overflow: hidden;
+}
 
+.dot-bg {
     background: radial-gradient(circle, #86EFAC 10%, transparent 11%),radial-gradient(circle at bottom left, #86EFAC 5%, transparent 6%),radial-gradient(circle at bottom right, #86EFAC 5%, transparent 6%),radial-gradient(circle at top left, #86EFAC 5%, transparent 6%),radial-gradient(circle at top right, #86EFAC 5%, transparent 6%);
     background-size: 1em 1em;
     background-color: #ffffff;

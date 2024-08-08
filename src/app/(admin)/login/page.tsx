@@ -9,7 +9,7 @@ export default function Login() {
     let [email, setEmail] = useState("");
     let [password, setPassword] = useState("");
 
-    return <main className={`${poppins.className} w-full h-full flex items-center justify-center p-5`}>
+    return <main className={`${poppins.className} dot-bg w-full h-full flex items-center justify-center p-5`}>
         <div className="bg-white p-5 flex flex-col border-2 rounded-lg relative">
             <h1 className="text-3xl mb-2">Newsletter Login</h1>
             <p className="mb-10 text-[14px] text-opacity-60 text-black">Login to use the ISTE newsletter admin page</p>
