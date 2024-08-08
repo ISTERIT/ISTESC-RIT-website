@@ -6,8 +6,8 @@ import getEmails from "@/app/(admin)/actions/getEmails";
 
 async function sendMailToAll(subject: string, message: string) {
     try {
-        let emails = await getEmails();
-        // let emails = ["fbn776@gmail.com"];
+        // let emails = await getEmails();
+        let emails = ["fbn776@gmail.com"];
 
         if(emails.length === 0) {
             return {
