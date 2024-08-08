@@ -4,7 +4,7 @@ import "./common.css";
 
 export default async function Home() {
     return (
-        <main className="flex gap-1 size-full overflow-hidden">
+        <main className="flex gap-1 size-full overflow-hidden max-sm:flex-col">
             <LeftSide/>
             <RightSide/>
         </main>

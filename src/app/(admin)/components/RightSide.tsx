@@ -49,7 +49,7 @@ export function RightSide() {
     let [subject, setSubject] = useState('');
     let [message, setMessage] = useState('');
 
-    return <section className="bg-admin_bg w-[calc(100%-25%)] p-3 overflow-hidden">
+    return <section className="bg-admin_bg w-[calc(100%-25%)] p-3 overflow-hidden max-sm:w-full max-sm:flex-1">
         <form className="rounded-md bg-white w-full h-full p-5 flex flex-col justify-between gap-5">
             <div className="flex flex-col flex-1">
                 <label htmlFor="subject">Subject</label>
