@@ -1,16 +1,12 @@
 import "./globals.css";
 import "../../global.css"
-import {Poppins} from "next/font/google";
+import {poppins} from "@/app/(admin)/lib/fonts";
+import {Toaster} from "@/components/ui/sonner";
 
 export const metadata = {
     title: "ISTE Newsletter Admin",
     description: "ISTE Newsletter Admin Page"
 };
-
-const poppins = Poppins({
-    weight: "400",
-    subsets: ["latin"],
-})
 
 export default function RootLayout({children}: Readonly<{
     children: React.ReactNode;
@@ -19,6 +15,8 @@ export default function RootLayout({children}: Readonly<{
         <html lang="en">
         <body className={poppins.className}>
         {children}
+        <Toaster position="bottom-center" richColors pauseWhenPageIsHidden theme="light" closeButton/>
+
         </body>
         </html>
     );

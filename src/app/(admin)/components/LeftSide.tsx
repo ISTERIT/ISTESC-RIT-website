@@ -1,12 +1,18 @@
 "use client";
-import {IconSearch, IconX,} from "@tabler/icons-react";
+import {IconLogout, IconSearch, IconX,} from "@tabler/icons-react";
 import React, {useEffect, useState} from "react";
 import {IUser} from "@/app/(admin)/lib/User";
 import {getUserList} from "@/app/(admin)/actions/getUserList";
 import Spinner from "@/app/(admin)/components/Loader";
 import UsersList from "@/app/(admin)/components/UsersList";
+import {useRouter} from "next/navigation";
+
+let delete_cookie = function(name: string) {
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};
 
 export function LeftSide() {
+    const router = useRouter();
     const [users, setUsers] = useState<IUser[]>([]);
     const [search, setSearch] = useState('');
     const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +27,13 @@ export function LeftSide() {
 
     return <aside className="flex flex-col w-[25%] h-full bg-admin_bg">
         <div className="bg-white p-3">
-            <h1 className="text-2xl mb-4">ISTE Newsletter</h1>
+            <div className="mb-4 flex justify-between items-center pr-3">
+                <h1 className="text-2xl">ISTE Newsletter</h1>
+                <button className="text-red-500" onClick={() => {
+                    delete_cookie('token');
+                    router.push("/login");
+                }}><IconLogout size={25}/></button>
+            </div>
             <form className="w-full flex">
                 <input type="text" placeholder="Search"
                        className="w-[calc(100%-50px)] px-4 py-3 bg-[#f6f6f6] rounded-l-full placeholder:text-gray-400 focus:outline-0"
