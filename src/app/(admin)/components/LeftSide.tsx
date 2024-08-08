@@ -61,40 +61,37 @@ export function LeftSide() {
                     </button>
                 </div>
             </div>
-            {isSearchVisible &&
-                <form className="w-full flex max-sm:mt-4">
-                    <input type="text" placeholder="Search"
-                           className="w-[calc(100%-50px)] px-4 py-3 bg-[#f6f6f6] rounded-l-full placeholder:text-gray-400 focus:outline-0"
-                           onChange={(e) => {
-                               setSearch(e.target.value);
-                           }} value={search}/>
-                    <button
-                        className="w-[50px] bg-[#f6f6f6] flex items-center justify-center rounded-r-full hover:bg-[#f0f0f0]"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            setSearch('');
-                        }}
-                    >
-                        {search ? <IconX/> : <IconSearch/>}
-                    </button>
-                </form>
+            <form className={`${!isSearchVisible && 'hidden'} w-full flex max-sm:mt-4`}>
+                <input type="text" placeholder="Search"
+                       className="w-[calc(100%-50px)] px-4 py-3 bg-[#f6f6f6] rounded-l-full placeholder:text-gray-400 focus:outline-0"
+                       onChange={(e) => {
+                           setSearch(e.target.value);
+                       }} value={search}/>
+                <button
+                    className="w-[50px] bg-[#f6f6f6] flex items-center justify-center rounded-r-full hover:bg-[#f0f0f0]"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        setSearch('');
+                    }}
+                >
+                    {search ? <IconX/> : <IconSearch/>}
+                </button>
+            </form>
+        </div>
+        <div
+            className={`${!isSearchVisible && 'hidden'} w-full flex-1 bg-opacity-50 overflow-y-scroll p-2 space-y-1 max-sm:fixed max-sm:top-[120px] max-sm:h-[calc(100%-120px)] max-sm:bg-[#f6f6f6]`}>
+            {
+                isLoading ?
+                    <div className="flex items-center justify-center h-[200px]">
+                        <Spinner className="w-[50px] border-black border-2"/>
+                    </div> :
+                    users.length === 0 ?
+                        <div className="flex items-center justify-center h-[200px]">
+                            No users found
+                        </div>
+                        :
+                        <UsersList users={users} filter={search} setUsers={setUsers}/>
             }
         </div>
-        {isSearchVisible &&
-            <div className="w-full flex-1 bg-opacity-50 overflow-y-scroll p-2 space-y-1 max-sm:fixed max-sm:top-[120px] max-sm:h-[calc(100%-120px)] max-sm:bg-[#f6f6f6]">
-                {
-                    isLoading ?
-                        <div className="flex items-center justify-center h-[200px]">
-                            <Spinner className="w-[50px] border-black border-2"/>
-                        </div> :
-                        users.length === 0 ?
-                            <div className="flex items-center justify-center h-[200px]">
-                                No users found
-                            </div>
-                            :
-                            <UsersList users={users} filter={search} setUsers={setUsers}/>
-                }
-            </div>
-        }
     </aside>
 }
