@@ -3,11 +3,11 @@
 import {toast} from "sonner";
 import {useState} from "react";
 import getEmails from "@/app/(admin)/actions/getEmails";
+import {splitArrayIntoChunks} from "@/app/(admin)/utils/utils";
 
 async function sendMailToAll(subject: string, message: string) {
     try {
         let emails = await getEmails();
-        // let emails = ["fbn776@gmail.com"];
 
         if(emails.length === 0) {
             return {
@@ -16,17 +16,24 @@ async function sendMailToAll(subject: string, message: string) {
             }
         }
 
-        await fetch("/api/mail", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                subject: subject,
-                message: message,
-                emails: emails
-            }),
-        });
+        let split = splitArrayIntoChunks(emails, 80);
+
+        let promises: Promise<Response>[] = [];
+        for(let list of split) {
+            promises.push(fetch("/api/mail", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    subject: subject,
+                    message: message,
+                    emails: list
+                }),
+            }))
+        }
+
+        await Promise.all(promises);
 
         return {
             ok: true,
