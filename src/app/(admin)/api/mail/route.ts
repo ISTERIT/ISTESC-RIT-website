@@ -1,6 +1,7 @@
 import {NextRequest} from "next/server";
 
 import nodemailer from "nodemailer";
+import {checkIfCorrect} from "@/app/(admin)/utils/utils";
 
 const transporter = nodemailer.createTransport({
     port: 465,
@@ -13,7 +14,24 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function POST(req: NextRequest) {
-    const { emails, subject, message } = await req.json();
+    const {emails, subject, message} = await req.json();
+    const token = req.cookies.get("token")?.value;
+
+    try {
+        if (!token)
+            throw new Error("Unauthorized");
+
+        let data = JSON.parse(Buffer.from(token, 'base64').toString('utf-8'))
+        if (!checkIfCorrect(data.email || '', data.password || '')) {
+            throw new Error("Unauthorized");
+        }
+    } catch (e) {
+        return Response.json({
+            message: "Unauthorized"
+        }, {
+            status: 401
+        });
+    }
 
     await new Promise((resolve, reject) => {
         transporter.verify(function (error, success) {
@@ -35,8 +53,6 @@ export async function POST(req: NextRequest) {
         text: message,
         html: `${message}`,
     };
-
-    console.log(mailData);
 
     await new Promise((resolve, reject) => {
         transporter.sendMail(mailData, (err, info) => {

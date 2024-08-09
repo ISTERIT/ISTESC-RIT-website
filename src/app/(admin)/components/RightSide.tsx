@@ -33,7 +33,11 @@ async function sendMailToAll(subject: string, message: string) {
             }))
         }
 
-        await Promise.all(promises);
+        let res = await Promise.all(promises);
+
+        if(res.some(r => !r.ok)) {
+            throw new Error("Failed to send emails");
+        }
 
         return {
             ok: true,
@@ -41,7 +45,7 @@ async function sendMailToAll(subject: string, message: string) {
             emailLen: emails.length
         }
     } catch (e) {
-
+        throw new Error("Failed to send emails");
     }
 }
 
