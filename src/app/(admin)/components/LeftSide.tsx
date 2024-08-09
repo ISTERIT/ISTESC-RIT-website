@@ -29,6 +29,8 @@ export function LeftSide() {
             setIsSearchVisible(window.innerWidth > 640);
         }
 
+        resizeHandler();
+
         window.addEventListener('resize', resizeHandler);
 
         return () => {
